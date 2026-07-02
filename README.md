@@ -1,26 +1,27 @@
-# Smartsheet Portfolio Dashboard
+# Enterprise Solutions Portfolio Dashboard
 
-GitHub Pages-ready interactive dashboard generated from `Report AI Smartsheet(1).xlsx`.
+Static GitHub Pages dashboard for the Smartsheet/Jira portfolio report.
 
 ## Files
 
-- `index.html` - main dashboard page
-- `styles.css` - visual styling
-- `app.js` - dashboard logic, filters, charts, and tables
-- `data.js` - extracted dashboard data from the Excel file
+- `index.html` - dashboard page
+- `styles.css` - dashboard styling
+- `app.js` - filtering, calculations, charts, and Excel upload logic
+- `data.js` - packaged starter dataset
 
-## How to host in GitHub Pages
+## How to use
 
-1. Create a new GitHub repository.
-2. Upload all files in this folder to the repository root.
-3. Go to **Settings > Pages**.
-4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Select the `main` branch and `/root` folder.
-6. Save. GitHub will provide your public dashboard URL.
+1. Upload all files to a GitHub repository.
+2. Enable GitHub Pages for the repository.
+3. Open the dashboard URL.
+4. To refresh the dashboard with a new report, use **Upload new data file** at the top-right of the dashboard and select the latest `.xlsx` export.
 
-## Counting logic
+The upload happens directly in your browser. The file is not sent anywhere. The dashboard refreshes immediately and tries to save the uploaded data in browser storage so it stays available after page refreshes.
 
-- Business Solutions are counted only from parent rows where `Business Solution` is populated.
-- Ticket volume uses all rows.
-- Ticket categories use `GTO Work Category`.
-- Savings tables are based on Business Solution parent records, enriched with child-row totals when parent values are blank.
+## Data rules
+
+- Business Solutions are counted from parent rows only.
+- Total Tickets are counted from all filtered Jira work items.
+- Annual Savings are summed from parent Business Solution rows only.
+- Departments Impacted is a distinct count after filters are applied.
+- Active Portfolio excludes Done and Cancelled items.
