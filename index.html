@@ -1,58 +1,54 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GTO Portfolio Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smartsheet Portfolio Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header class="hero">
-    <div>
-      <p class="eyebrow">Smartsheet · Jira · Portfolio Value</p>
-      <h1>GTO Portfolio Dashboard</h1>
-      <p class="subtitle">Track initiatives, BAU/KTLO, enhancements, backlog, completed savings, users impacted, and savings type.</p>
-    </div>
-    <button id="exportCsv">Export Filtered CSV</button>
-  </header>
+  <main class="dashboard">
+    <section class="filterBar">
+      <label>Category<select id="categoryFilter"><option value="All">All</option></select></label>
+      <label>Status<select id="statusFilter"><option value="All">All</option></select></label>
+      <label>Department<select id="departmentFilter"><option value="All">All</option></select></label>
+      <label>Priority<select id="priorityFilter"><option value="All">All</option></select></label>
+      <label>Year<select id="yearFilter"><option value="All">All</option></select></label>
+      <button id="resetBtn">Reset filters</button>
+    </section>
 
-  <section class="filters">
-    <label>Department<select id="department"><option value="">All</option></select></label>
-    <label>Jira Status<select id="jiraStatus"><option value="">All</option></select></label>
-    <label>GTO Category<select id="gtoCategory"><option value="">All</option></select></label>
-    <label>Type of Savings<select id="savingType"><option value="">All</option></select></label>
-    <label>Search<input id="search" placeholder="Search initiative, sponsor, key..." /></label>
-  </section>
-
-  <main>
-    <section class="cards" id="cards"></section>
-
-    <section class="grid two">
-      <div class="panel"><h2>Tickets by GTO category</h2><div id="categoryChart" class="chart"></div></div>
-      <div class="panel"><h2>Status by category</h2><div id="statusChart" class="chart tall"></div></div>
+    <section class="kpis">
+      <div class="kpi"><span>Total Work Items</span><strong id="kpiTickets">0</strong></div>
+      <div class="kpi"><span>Parent Solutions</span><strong id="kpiParentSolutions">0</strong></div>
+      <div class="kpi"><span>Initiatives</span><strong id="kpiInitiatives">0</strong></div>
+      <div class="kpi"><span>KTLO</span><strong id="kpiKTLO">0</strong></div>
+      <div class="kpi"><span>Enhancements</span><strong id="kpiEnhancements">0</strong></div>
+      <div class="kpi"><span>Total Annual Savings</span><strong id="kpiSavings">$0</strong></div>
+      <div class="kpi"><span>Users Impacted</span><strong id="kpiUsers">0</strong></div>
+      <div class="kpi"><span>Departments Impacted</span><strong id="kpiDepartments">0</strong></div>
     </section>
 
     <section class="grid two">
-      <div class="panel"><h2>Type of savings</h2><div id="savingsTypeChart" class="chart tall"></div></div>
-      <div class="panel"><h2>Users impacted by category</h2><div id="usersChart" class="chart"></div></div>
+      <div class="card"><h3>Parent Solutions by Jira Status</h3><canvas id="solutionsByStatus"></canvas></div>
+      <div class="card"><h3>Work Items by Category</h3><canvas id="ticketsByCategory"></canvas></div>
     </section>
 
-    <section class="panel">
-      <div class="section-title"><div><h2>Top 10 completed initiatives by annual savings</h2><p>Only parent initiative rows where Business Solution = 1 and Jira/Workspace status is completed.</p></div></div>
-      <div class="table-wrap"><table id="topSavings"></table></div>
+    <section class="grid two">
+      <div class="card"><h3>Savings Pipeline</h3><canvas id="savingsPipeline"></canvas></div>
+      <div class="card"><h3>Departments Impacted</h3><canvas id="departmentImpact"></canvas></div>
     </section>
 
-    <section class="panel">
-      <div class="section-title"><div><h2>Initiatives still in backlog / active work</h2><p>Parent initiatives grouped by Jira Status, including users impacted and type of savings.</p></div></div>
-      <div id="backlogGroups"></div>
+    <section class="card">
+      <div class="tableHeader"><h3>Open Parent Solutions by Annual Savings</h3><input id="topSearch" placeholder="Search open solutions..." /></div>
+      <div class="tableWrap"><table id="topSavingsTable"><thead><tr><th>Initiative</th><th>Department</th><th>Requestor</th><th>Description</th><th>Type of Savings</th><th>Users Impacted</th><th>Annual Savings</th></tr></thead><tbody></tbody></table></div>
     </section>
 
-    <section class="panel">
-      <div class="section-title"><div><h2>Detailed portfolio</h2><p>Filtered ticket-level view. Use the filters above to drill down.</p></div></div>
-      <div class="table-wrap"><table id="detailTable"></table></div>
+    <section class="card">
+      <div class="tableHeader"><h3>Pending Parent Solutions by Jira Status</h3><input id="pendingSearch" placeholder="Search pending work..." /></div>
+      <div class="tableWrap"><table id="pendingTable"><thead><tr><th>Jira Status</th><th>Parent Solution</th><th>Department</th><th>Financial Impact</th><th>Users</th><th>Work Items</th><th>Potential Savings</th></tr></thead><tbody></tbody></table></div>
     </section>
   </main>
-
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

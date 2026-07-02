@@ -1,23 +1,26 @@
-# GTO Portfolio Dashboard
+# Smartsheet Portfolio Dashboard
 
-This dashboard is built from `Report AI Smartsheet.xlsx` and is ready for GitHub Pages.
+GitHub Pages-ready interactive dashboard generated from `Report AI Smartsheet(1).xlsx`.
 
-## How to publish
+## Files
+
+- `index.html` - main dashboard page
+- `styles.css` - visual styling
+- `app.js` - dashboard logic, filters, charts, and tables
+- `data.js` - extracted dashboard data from the Excel file
+
+## How to host in GitHub Pages
+
 1. Create a new GitHub repository.
-2. Upload these files to the root of the repository: `index.html`, `styles.css`, `app.js`, and `data.js`.
+2. Upload all files in this folder to the repository root.
 3. Go to **Settings > Pages**.
 4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Select your branch, usually `main`, and the `/root` folder.
-6. Save and open the GitHub Pages URL.
+5. Select the `main` branch and `/root` folder.
+6. Save. GitHub will provide your public dashboard URL.
 
-## What this version shows
-- Parent initiative count from `Business Solution = 1`.
-- Ticket counts by `GTO Work Category`: Initiative, BAU/KTLO, Enhancement.
-- Status by category using `Jira Status`.
-- Top 10 completed parent initiatives by highest annual savings.
-- Backlog / active parent initiatives grouped by Jira Status.
-- Users impacted and type of savings.
-- Search and filters by Department, Jira Status, GTO Category, and Type of Savings.
+## Counting logic
 
-## Important
-This version is fully self-contained and does not require Chart.js or any external library. It should work both locally and on GitHub Pages.
+- Business Solutions are counted only from parent rows where `Business Solution` is populated.
+- Ticket volume uses all rows.
+- Ticket categories use `GTO Work Category`.
+- Savings tables are based on Business Solution parent records, enriched with child-row totals when parent values are blank.
